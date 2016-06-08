@@ -16,14 +16,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.text());
 app.set('trust proxy', 1);
 app.use(session({
-  secret: 'MUSTADDTHIS',
-  resave: false,
-  saveUninitialized: true,
-  cookie: {}
+    secret: 'MUSTADDTHIS',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {}
 }));
 
 app.get('/api/status', (req, res) => {
-  res.send('OK');
+    res.send('OK');
 });
 
 app.use(express.static(__dirname + '/../client/'));
@@ -32,19 +32,20 @@ app.use('app', express.static(__dirname + '/../client/app'));
 
 
 app.get('*', (req, res) => {
-  getProducts(function(products){
-  });
-  res.sendFile(__dirname, '/../client/index.html');
+    getProducts(function (products) {
+    });
+    res.sendFile(__dirname, '/../client/index.html');
 });
 
 
 app.get('/api/products', product.list);
 
+app.post('/api/register', user.register);
 app.post('/api/login', user.login);
 app.get('/api/logout', user.logout);
 
-app.listen(3000, function() {
-  console.log('Test server is up '+__dirname+'/../../')
+app.listen(3000, function () {
+    console.log('Test server is up ' + __dirname + '/../../')
 });
 
 export var App = app;
