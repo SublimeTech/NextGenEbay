@@ -4,13 +4,25 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as db from "./db";
 import {getProducts} from "./db";
-var user = require("./controllers/product");
+var product = require("./controllers/product");
+var user = require("./controllers/user");
+var session = require('express-session');
 
 
 var app = express();
 app.set('view engine', 'jade');
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use(bodyParser.text());
+app.set('trust proxy', 1);
+app.use(session({
+  secret: 'MUSTADDTHIS',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {}
+}));
 
-app.get('/status', (req, res) => {
+app.get('/api/status', (req, res) => {
   res.send('OK');
 });
 
@@ -21,13 +33,15 @@ app.use('app', express.static(__dirname + '/../client/app'));
 
 app.get('*', (req, res) => {
   getProducts(function(products){
-    console.log(products);
   });
   res.sendFile(__dirname, '/../client/index.html');
 });
 
 
-app.get('/products', user.list);
+app.get('/api/products', product.list);
+
+app.post('/api/login', user.login);
+app.get('/api/logout', user.logout);
 
 app.listen(3000, function() {
   console.log('Test server is up '+__dirname+'/../../')

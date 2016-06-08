@@ -32,15 +32,35 @@ export interface Bid {
 
 
 export function getProducts(callback: (products: Product[]) => void) {
-  db.connect().then(function(obj) {
-    obj.query("select * from product;").then(function(data: Product[]){
-      callback(data);
+    db.task(t =>
+        t.map('SELECT * FROM product', null, product =>
+            t.map('SELECT * FROM bid WHERE product_id = $1 order by amount desc limit 1', product.id, bid=>
+                t.one('select id, username, created_at from "user" where id = $1', bid.user_id)
+                    .then(user=>{
+                        bid.user = user;
+                        return bid
+                    })
+            )
+                .then(t.batch)
 
-    }).catch(function(error){
-      console.error(error);
-    });
-  }).catch(function(error){
-    console.error(error);
-  });
+                .then(bid=> {
 
+                    product.maxBid = bid[0];
+                    return product;
+                })
+        ).then(t.batch)
+    )
+        .then(data=> {
+            callback(data)
+            /* data = the complete tree */
+        });
+
+
+}
+
+export function getUserByUsername(username, callback: (user: User) => void) {
+    db.connect().then(db=> db.oneOrNone('select * from "user" where username = $1', [username])
+        .then(user=>callback(user))
+        .catch(error=> console.log(error))
+    );
 }

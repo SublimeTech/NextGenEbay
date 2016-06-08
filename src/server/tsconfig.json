@@ -1,28 +1,29 @@
 {
-    "compilerOptions": {
-        "target": "es5",
-        "module": "commonjs",
-        "sourceMap": true
-    },
-    "files": [
-        "./app.ts",
-        "./controllers/product.ts",
-        "./db.ts",
-        "./typings/body-parser/body-parser.d.ts",
-        "./typings/errorhandler/errorhandler.d.ts",
-        "./typings/express/express.d.ts",
-        "./typings/method-override/method-override.d.ts",
-        "./typings/mime/mime.d.ts",
-        "./typings/mongodb/mongodb.d.ts",
-        "./typings/node/node.d.ts",
-        "./typings/serve-static/serve-static.d.ts",
-        "./typings/tsd.d.ts"
-    ],
-    "filesGlob": [
-        "./**/*.ts",
-        "!./node_modules/**/*.ts"
-    ],
-    "atom": {
-        "rewriteTsconfig": true
-    }
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "sourceMap": true
+  },
+  "files": [
+    "./app.ts",
+    "./controllers/product.ts",
+    "./controllers/user.ts",
+    "./db.ts",
+    "./typings/body-parser/body-parser.d.ts",
+    "./typings/errorhandler/errorhandler.d.ts",
+    "./typings/express/express.d.ts",
+    "./typings/method-override/method-override.d.ts",
+    "./typings/mime/mime.d.ts",
+    "./typings/mongodb/mongodb.d.ts",
+    "./typings/node/node.d.ts",
+    "./typings/serve-static/serve-static.d.ts",
+    "./typings/tsd.d.ts"
+  ],
+  "filesGlob": [
+    "./**/*.ts",
+    "!./node_modules/**/*.ts"
+  ],
+  "atom": {
+    "rewriteTsconfig": true
+  }
 }
