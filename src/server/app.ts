@@ -29,9 +29,10 @@ app.get('/api/status', (req, res) => {
 app.use(express.static(__dirname + '/../client/'));
 app.use(express.static(__dirname + '/../../'));
 app.use('app', express.static(__dirname + '/../client/app'));
+app.use('app', express.static(__dirname + '/../client/'));
 
 
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
     getProducts(function (products) {
     });
     res.sendFile(__dirname, '/../client/index.html');
