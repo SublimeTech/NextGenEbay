@@ -1,0 +1,36 @@
+<div class="container">
+    <div *ngFor="let product of vm.products" class="product col-md-4">
+        <div>{{product.title}}</div>
+        <div>{{product.description}}</div>
+        <div class="max-bid">
+            <strong>Max Bid</strong>
+            <p>{{product.maxBid.user.name}}</p>
+            <p>{{product.maxBid.amount}}</p>
+        </div>
+        <button type="button" class="btn btn-primary" (click)="smModal.show()">Small modal</button>
+
+        <div bsModal #smModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" aria-label="Close" (click)="smModal.hide()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">Small modal</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form" role="form">
+                            <div class="form-group">
+                                <label for="bidInput">Bid</label>
+                                <input type="number" class="form-control" id="bidInput" placeholder="0.0$" [(ngModel)]="vm.bidInput">
+                            </div>
+                            <button class="btn btn-primary" (click)="vm.makeBid(product.id)" >Bid</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Small modal -->

@@ -17,6 +17,15 @@
   },
   "homepage": "https://github.com/cgomezmendez/NextGenEbay#readme",
   "dependencies": {
+    "@angular/common": "2.0.0-rc.1",
+    "@angular/compiler": "2.0.0-rc.1",
+    "@angular/core": "2.0.0-rc.1",
+    "@angular/http": "2.0.0-rc.1",
+    "@angular/platform-browser": "2.0.0-rc.1",
+    "@angular/platform-browser-dynamic": "2.0.0-rc.1",
+    "@angular/router": "2.0.0-rc.1",
+    "@angular/router-deprecated": "2.0.0-rc.1",
+    "@angular/upgrade": "2.0.0-rc.1",
     "bcrypt": "^0.8.6",
     "body-parser": "^1.14.1",
     "bootstrap": "^3.3.6",
@@ -34,18 +43,7 @@
     "systemjs": "^0.19.27",
     "typescript": "^1.8.10",
     "typings": "^1.0.4",
-    "zone.js": "^0.6.12",
-
-    "@angular/common":  "2.0.0-rc.1",
-    "@angular/compiler":  "2.0.0-rc.1",
-    "@angular/core":  "2.0.0-rc.1",
-    "@angular/http":  "2.0.0-rc.1",
-    "@angular/platform-browser":  "2.0.0-rc.1",
-    "@angular/platform-browser-dynamic":  "2.0.0-rc.1",
-    "@angular/router":  "2.0.0-rc.1",
-    "@angular/router-deprecated":  "2.0.0-rc.1",
-    "@angular/upgrade":  "2.0.0-rc.1",
-    "bootstrap": "^3.3.6"
+    "zone.js": "^0.6.12"
   },
   "devDependencies": {
     "concurrently": "^2.0.0",
