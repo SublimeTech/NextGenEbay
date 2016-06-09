@@ -47,7 +47,12 @@ app.get('/about', (req, res) => {
     res.sendFile(path.resolve(__dirname + '/../client/index.html')) ;
 });
 
+app.get('/product/new', (req, res) => {
+    res.sendFile(path.resolve(__dirname + '/../client/index.html')) ;
+});
+
 app.get('/api/products', product.list);
+app.post('/api/product', product.createProduct);
 app.post('/api/bid', product.makeBid);
 
 app.post('/api/register', user.register);

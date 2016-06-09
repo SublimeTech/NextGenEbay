@@ -60,6 +60,23 @@ export class ProductService {
             })
     }
 
+    createProduct(title: string, description: string, imageUrl: string): Observable<Product> {
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        return this.http.post('/api/product/', JSON.stringify({title: title, description: description, imageUrl: imageUrl}), options)
+            .map(function(res){
+                var jsonResp = res.json();
+                if (jsonResp.error) {
+                    return jsonResp.error_code
+                } else {
+                    return true
+                }
+            })
+            .catch(function(err){
+                console.log(err)
+            })
+    }
+
     listenBids() {
         return new $WebSocket("ws://localhost:3000/api/bid/listen");
     }

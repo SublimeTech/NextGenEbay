@@ -93,6 +93,16 @@ export function getProducts(callback:(products:Product[]) => void) {
 
 }
 
+export function createProduct(title, description, email, callback:(data) => void) {
+    db.one('INSERT INTO product(title, description, image) values($1, $2, $3) returning id;', [title, description, email])
+        .then(data=> callback(data))
+        .catch(function(err){
+            console.log('Error inserting user into database '+err);
+            callback(null);
+        })
+}
+
+
 export function getUserByUsername(username, callback:(user:User) => void) {
     db.connect().then(db=> db.oneOrNone('select * from "user" where username = $1', [username])
         .then(user=>callback(user))
@@ -108,3 +118,5 @@ export function createUser(username, password, callback:(data) => void) {
             callback(null);
         })
 }
+
+

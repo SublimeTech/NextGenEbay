@@ -5,6 +5,7 @@ import {LoginService, User} from './login.service'
 import { LoginComponent } from './login.component';
 import {ProductList} from './products-list.component'
 import {RegisterComponent} from './register.component'
+import {NewProductComponent} from './new-product.component'
 import {HTTP_PROVIDERS} from '@angular/http';
 import { RouteParams, Router } from '@angular/router-deprecated';
 
@@ -18,7 +19,9 @@ import { RouteParams, Router } from '@angular/router-deprecated';
     <li class="nav-item active">
       <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
     </li>
-    
+    <li class="nav-item">
+      <a class="nav-link" href="#" [routerLink]="['NewProduct']">Add product</a>
+    </li>
     
     <li class="nav-item">
       <a class="nav-link" href="#">About</a>
@@ -64,6 +67,12 @@ import { RouteParams, Router } from '@angular/router-deprecated';
         name: 'Home',
         component: ProductList,
         useAsDefault: true
+    },
+    {
+        path: '/product/new',
+        name: 'NewProduct',
+        component: NewProductComponent,
+        useAsDefault: false
     },
 ])
 export class AppComponent {

@@ -25,7 +25,7 @@
                     </div>
                     <div class="modal-body">
                         <div>
-                            <ul style="list-style:none;">
+                            <ul style="list-style:none;" *ngIf="product.maxBid != null">
                                 <li>Current MaxBid: {{product.maxBid?.amount}}</li>
                                 <li>Current MaxBidder: {{product.maxBid?.user.username}}</li>
                             </ul>

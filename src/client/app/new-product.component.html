@@ -1,0 +1,31 @@
+<div class="container">
+    <form class="form" role="form" (submit)="vm.onSubmit()"  id="ngForm">
+        <div class="form-group">
+            <alert [hidden]="vm.loginError.length == 0" type="danger" dismissible="true">
+                {{ vm.loginError }}
+            </alert>
+            <label for="titleInput">Title</label>
+            <input type="text" class="form-control" required
+                   [(ngModel)]="vm.title"
+                   ngControl="title"  #title="ngForm" id="titleInput">
+            <div [hidden]="title.valid || title.pristine" class="alert alert-danger">
+                Title can't be empty
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputDescription">Description</label>
+            <textarea class="form-control" id="inputDescription" name="password" placeholder="password" [(ngModel)]="vm.description"
+            ngcontrol="description" #description="ngForm" required></textarea>
+            <div [hidden]="description.valid || description.pristine" class="alert alert-danger">
+                Description can't be empty
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="imageUrl">Image url</label>
+            <input type="text" class="form-control"
+                   [(ngModel)]="vm.imageUrl"
+                   ngControl="imageUrl"  #imageUrl="ngForm" id="imageUrl">
+        </div>
+        <button type="submit" class="btn btn-default">Register</button>
+    </form>
+</div>

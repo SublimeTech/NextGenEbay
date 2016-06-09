@@ -46,3 +46,34 @@ exports.makeBid = function(req, res) {
 
 
 };
+
+exports.createProduct = function (req, res) {
+  var error = false;
+  var errors = {title: [], description: []};
+  if (!req.body.title) {
+    error = true;
+    errors.title.push('Title can\'t be empty');
+  }
+  if (!req.body.description) {
+    error = true;
+    errors.description.push('Description can\'t be empty')
+  }
+
+  if (error == true) {
+    res.send(JSON.stringify({error: true, errors: errors}));
+    return;
+  }
+  if (!req.body.image) {
+    var image = null;
+  } else {
+    var image = req.body.image;
+  }
+
+  db.createProduct(req.body.title, req.body.description, image, function (data) {
+    if (!data) {
+      res.send(JSON.stringify({error: true, response_msg: 'Internal error'}), 500)
+    } else {
+      res.send(JSON.stringify({error: false, response_msg: 'Product created success'}))
+    }
+  });
+};
