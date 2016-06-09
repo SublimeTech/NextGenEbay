@@ -4,6 +4,12 @@ import 'rxjs/Rx';
 import { Observable }  from 'rxjs/Observable'
 import { RequestOptions } from '@angular/http';
 
+export class User {
+    constructor(id:string, username: string, created_at: string) {
+
+    }
+}
+
 @Injectable()
 export class LoginService {
     private baseURL = '/api/products'
@@ -20,9 +26,9 @@ export class LoginService {
                 var jsonResp = res.json();
                 if (jsonResp.error) {
                     console.error(jsonResp.error_msg);
-                    return false;
+                    return null;
                 } else {
-                    return true;
+                    return jsonResp.user;
                 }
             })
             .catch(function(err){

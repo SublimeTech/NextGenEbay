@@ -1,12 +1,11 @@
 import { Component} from '@angular/core';
-import { LoginService } from './login.service'
+import { LoginService, User } from './login.service'
 import {HTTP_PROVIDERS} from '@angular/http';
 import 'rxjs/Rx';
 import {CORE_DIRECTIVES} from '@angular/common';
 import {AlertComponent} from 'ng2-bootstrap';
 import { RouteParams, Router } from '@angular/router-deprecated';
 import {MODAL_DIRECTVES, BS_VIEW_PROVIDERS} from 'ng2-bootstrap';
-import localStorage from 'angular2-local-storage';
 
 
 
@@ -40,13 +39,13 @@ export class LoginComponent {
 
     login() {
         var vm = this.vm;
-        vm.loginService.login('cristian.g', 'elcj2304')
-            .map(function(success: boolean){
+        vm.loginService.login(vm.username, vm.password)
+            .map(function(user: User){
                 vm.loginError = "Error en el login";
-                console.log('Inside '+ success);
-                if (success == true) {
+                if (user != null) {
                     vm.loginError = "";
                     localStorage.setItem('is_logged_in', true);
+                    localStorage.setItem('currentUser', JSON.stringify(user));
                     vm.router.navigate(['Home'])
 
                 } else {

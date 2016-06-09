@@ -19,7 +19,8 @@ exports.login = function (req, res) {
             if (isPassword) {
                 req.session.isAuthenticated = true;
                 req.session.currentUser = data;
-                res.send(JSON.stringify({error: false, response_msg: 'User authenticated success.'}));
+                delete data.password;
+                res.send(JSON.stringify({error: false, response_msg: 'User authenticated success.'; user: data}));
             } else {
                 res.send(JSON.stringify({error: true, error_msg: 'Invalid credentials'}));
             }
