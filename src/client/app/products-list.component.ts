@@ -1,5 +1,5 @@
 import { Component} from '@angular/core';
-import { ProductService, Product } from './product.service'
+import { ProductService, Product, Bid } from './product.service'
 import {HTTP_PROVIDERS} from '@angular/http';
 import 'rxjs/Rx';
 import {CORE_DIRECTIVES} from '@angular/common';
@@ -7,6 +7,7 @@ import {AlertComponent} from 'ng2-bootstrap';
 import { RouteParams, Router } from '@angular/router-deprecated';
 import 'rxjs/Rx';
 import {MODAL_DIRECTVES, BS_VIEW_PROVIDERS} from 'ng2-bootstrap';
+import { Observable }  from 'rxjs/Observable'
 
 
 
@@ -25,7 +26,7 @@ export class ProductList {
     products: [Product];
     bidInput: number;
 
-    constructor (private productService: ProductService) {
+    constructor (private productService: ProductService, private router: Router) {
 
     }
 
@@ -39,7 +40,19 @@ export class ProductList {
     }
 
     makeBid(productId: number) {
+        var vm = this.vm;
         console.log('Making bid '+productId);
+        this.vm.productService.makeBid(productId, this.bidInput)
+            .map(function(bid: Bid){
+                if (bid != 1000){
+                    console.log(bid);
+                }
+                else {
+                    vm.router.navigate(['Login'])
+                }
+
+            })
+            .subscribe();
     }
 
 

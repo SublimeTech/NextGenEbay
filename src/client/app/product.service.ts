@@ -11,6 +11,12 @@ export class Product {
     }
 }
 
+export class Bid {
+    constructor(public id: number, productId: number, userId: number, amount: number) {
+
+    }
+}
+
 @Injectable()
 export class ProductService {
     private baseURL = '/api/products'
@@ -33,6 +39,26 @@ export class ProductService {
             })
             .catch(function(err){
                 return Observable.throw(false);
+            })
+    }
+
+    makeBid(productId: number, amount: number): Observable<Bid> {
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        return this.http.post('/api/bid', JSON.stringify({product_id: productId, amount: amount}), options)
+            .map(function(res){
+                var jsonResp = res.json();
+                console.log(jsonResp)
+                console.log(jsonResp);
+                if (jsonResp.error) {
+                    console.log(jsonResp)
+                    return jsonResp.error_code
+                } else {
+                    return jsonResp.bid
+                }
+            })
+            .catch(function(err){
+                console.log(err)
             })
     }
 }

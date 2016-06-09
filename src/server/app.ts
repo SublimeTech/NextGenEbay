@@ -7,6 +7,7 @@ import {getProducts} from "./db";
 var product = require("./controllers/product");
 var user = require("./controllers/user");
 var session = require('express-session');
+var path = require('path');
 
 
 var app = express();
@@ -26,20 +27,24 @@ app.get('/api/status', (req, res) => {
     res.send('OK');
 });
 
-app.use(express.static(__dirname + '/../client/'));
+
 app.use(express.static(__dirname + '/../../'));
+app.use(express.static(__dirname + '/../client/'));
 app.use('app', express.static(__dirname + '/../client/app'));
 app.use('app', express.static(__dirname + '/../client/'));
 
-
 app.get('/', (req, res) => {
-    getProducts(function (products) {
-    });
-    res.sendFile(__dirname, '/../client/index.html');
+    res.sendFile(path.resolve(__dirname + '/../client/index.html')) ;
+});
+app.get('/login', (req, res) => {
+    res.sendFile(path.resolve(__dirname + '/../client/index.html')) ;
 });
 
 
+
+
 app.get('/api/products', product.list);
+app.post('/api/bid', product.makeBid);
 
 app.post('/api/register', user.register);
 app.post('/api/login', user.login);

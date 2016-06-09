@@ -26,9 +26,30 @@ export interface Bid {
     id:number;
     user:User;
     product:Product;
+    amount: number
     created_at:string;
 }
 
+export function getProductById(callback: (product:Product) => void) {
+    //Todo: make logic
+};
+
+export function getProductMaxbid(productId, callback: (maxBid:Bid) => void) {
+    db.oneOrNone('select id, product_id, user_id, amount::numeric from bid where product_id = $1 order by amount desc limit 1;', [productId])
+        .then(bid=> callback(bid))
+        // .catch(err=>console.error(err))
+};
+
+export function makeBid(userId: number, productId: number, amount: number, callback: (bid: Bid) => void) {
+    db.connect().then(function(db) {
+        db.one('INSERT INTO bid(user_id, amount, product_id) VALUES($1, $2, $3) returning id;',  [userId, amount, productId])
+            .then(bidId=>
+                db.one('SELECT user_id, amount::numeric, product_id from bid where id = $1;', [bidId.id])
+                    .then(bid=>callback(bid))
+            )
+            .catch(err=>console.error(err))
+    });
+}
 
 export function getProducts(callback:(products:Product[]) => void) {
     db.task(t =>

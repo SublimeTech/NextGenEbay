@@ -68,7 +68,7 @@ exports.register = function (req, res) {
                 if (!data) {
                     res.send(JSON.stringify({error: true, response_msg: 'Internal error'}), 500)
                 } else {
-                    res.send(JSON.stringify({error: false, response_msg: 'User register success'}))
+                    res.send(JSON.stringify({error: false, response_msg: 'User cr'}))
                 }
             });
         } else {

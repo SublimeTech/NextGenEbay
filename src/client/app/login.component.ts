@@ -23,7 +23,7 @@ export class LoginComponent {
     password = "";
     loginError = "";
 
-    constructor (private loginService: LoginService) {
+    constructor (private loginService: LoginService, private router: Router) {
 
     }
 
@@ -43,7 +43,7 @@ export class LoginComponent {
                 console.log('Inside '+ success);
                 if (success == true) {
                     vm.loginError = "";
-                    this.router.navigate('')
+                    vm.router.navigate(['Home'])
 
                 } else {
                     vm.loginError = "Bad credentials";
