@@ -5,6 +5,7 @@ import 'rxjs/Rx';
 import {CORE_DIRECTIVES} from '@angular/common';
 import {AlertComponent} from 'ng2-bootstrap';
 import { RouteParams, Router } from '@angular/router-deprecated';
+import {MODAL_DIRECTVES, BS_VIEW_PROVIDERS} from 'ng2-bootstrap';
 
 
 
@@ -13,7 +14,8 @@ import { RouteParams, Router } from '@angular/router-deprecated';
     templateUrl: 'app/login.component.html',
     styleUrls: ['app/login.component.css'],
     providers: [LoginService, HTTP_PROVIDERS],
-    directives: [AlertComponent, CORE_DIRECTIVES]
+    directives: [AlertComponent, CORE_DIRECTIVES, MODAL_DIRECTVES],
+    viewProviders:[BS_VIEW_PROVIDERS]
 })
 
 

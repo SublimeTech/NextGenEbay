@@ -37,7 +37,7 @@ export function getProductById(callback: (product:Product) => void) {
 export function getProductMaxbid(productId, callback: (maxBid:Bid) => void) {
     db.oneOrNone('select id, product_id, user_id, amount::numeric from bid where product_id = $1 order by amount desc limit 1;', [productId])
         .then(bid=> callback(bid))
-        // .catch(err=>console.error(err))
+        .catch(err=>console.error(err))
 };
 
 export function makeBid(userId: number, productId: number, amount: number, callback: (bid: Bid) => void) {
@@ -47,7 +47,7 @@ export function makeBid(userId: number, productId: number, amount: number, callb
                 db.one('SELECT user_id, amount::numeric, product_id from bid where id = $1;', [bidId.id])
                     .then(bid=>callback(bid))
             )
-            .catch(err=>console.error(err))
+            // .catch(err=>console.error(err))
     });
 }
 

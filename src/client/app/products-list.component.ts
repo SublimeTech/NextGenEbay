@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, ViewChild} from '@angular/core';
 import { ProductService, Product, Bid } from './product.service'
 import {HTTP_PROVIDERS} from '@angular/http';
 import 'rxjs/Rx';
@@ -25,6 +25,8 @@ export class ProductList {
     vm = this;
     products: [Product];
     bidInput: number;
+    @ViewChild('smModal') modal;
+
 
     constructor (private productService: ProductService, private router: Router) {
 
@@ -39,6 +41,10 @@ export class ProductList {
             .subscribe();
     }
 
+    showModal() {
+        this.modal.show()
+    }
+
     makeBid(productId: number) {
         var vm = this.vm;
         console.log('Making bid '+productId);
@@ -48,7 +54,8 @@ export class ProductList {
                     console.log(bid);
                 }
                 else {
-                    vm.router.navigate(['Login'])
+                    vm.modal.hide();
+                    vm.modal.onHidden.subscribe(item=>vm.router.navigate(['Login']))
                 }
 
             })

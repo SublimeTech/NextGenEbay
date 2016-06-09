@@ -1,7 +1,7 @@
 <div class="container">
     <form class="form" role="form" (submit)="vm.onSubmit()"  id="ngForm">
         <div class="form-group">
-            <alert [hidden]="" type="danger" dismissible="true">
+            <alert [hidden]="vm.loginError.length == 0" type="danger" dismissible="true">
                 {{ vm.loginError }}
             </alert>
             <label for="username">Username</label>

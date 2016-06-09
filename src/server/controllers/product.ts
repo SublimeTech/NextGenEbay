@@ -21,13 +21,13 @@ exports.makeBid = function(req, res) {
 
   db.getProductMaxbid(req.body.product_id, function(currentMaxBid){
     console.log(currentMaxBid)
-    console.log(req.body.amount)
-    if (req.body.amount < currentMaxBid.amount) {
+    if (currentMaxBid && req.body.amount < currentMaxBid.amount) {
       res.send(JSON.stringify({error: true, error_msg: 'Amount is less than the current max bid of this product'}));
       return;
     }
     if (!req.session.currentUser) {
       res.send(JSON.stringify({error: true, error_msg: 'User should be authenticated in order to make bids', error_code:1000}))
+      return;
     }
     // console.log(req.session.currentUser)
     db.makeBid(req.session.currentUser.id, req.body.product_id, req.body.amount, function(bid){
