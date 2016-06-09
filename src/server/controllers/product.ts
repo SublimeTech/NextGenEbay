@@ -1,5 +1,6 @@
 import * as db from "../db";
 import {getProducts} from "../db";
+import {WebSocket} from '../app'
 
 exports.list = function(req, res) {
   db.getProducts(function(data){
@@ -21,7 +22,10 @@ exports.makeBid = function(req, res) {
 
   db.getProductMaxbid(req.body.product_id, function(currentMaxBid){
     console.log(currentMaxBid)
-    if (currentMaxBid && req.body.amount < currentMaxBid.amount) {
+    if (!currentMaxBid) {
+
+    }
+    else if (req.body.amount < currentMaxBid.amount) {
       res.send(JSON.stringify({error: true, error_msg: 'Amount is less than the current max bid of this product'}));
       return;
     }
@@ -31,7 +35,11 @@ exports.makeBid = function(req, res) {
     }
     // console.log(req.session.currentUser)
     db.makeBid(req.session.currentUser.id, req.body.product_id, req.body.amount, function(bid){
-      return res.send(JSON.stringify({error: false, bid: bid}));
+      res.send(JSON.stringify({error: false, bid: bid}));
+      var aWss = WebSocket.getWss('/api/bid/listen');
+      aWss.clients.forEach(function (client) {
+        client.send(JSON.stringify({bid:bid}));
+      });
     })
 
   });

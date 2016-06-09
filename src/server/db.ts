@@ -45,8 +45,10 @@ export function makeBid(userId: number, productId: number, amount: number, callb
         db.one('INSERT INTO bid(user_id, amount, product_id) VALUES($1, $2, $3) returning id;',  [userId, amount, productId])
             .then(bidId=>
                 db.one('SELECT user_id, amount::numeric, product_id from bid where id = $1;', [bidId.id])
-                    .then(bid=>callback(bid))
-            )
+                    .then(function(bid) {
+                        callback(bid)
+                    })
+            );
             // .catch(err=>console.error(err))
     });
 }

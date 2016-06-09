@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import 'rxjs/Rx';
 import { Observable }  from 'rxjs/Observable'
 import { RequestOptions } from '@angular/http';
+import {$WebSocket} from 'angular2-websocket/angular2-websocket'
 
 export class Product {
     constructor(public id: number, public title: string,
@@ -19,7 +20,7 @@ export class Bid {
 
 @Injectable()
 export class ProductService {
-    private baseURL = '/api/products'
+    private baseURL = '/api/products';
 
     constructor(private http:Http) {
     }
@@ -48,10 +49,7 @@ export class ProductService {
         return this.http.post('/api/bid', JSON.stringify({product_id: productId, amount: amount}), options)
             .map(function(res){
                 var jsonResp = res.json();
-                console.log(jsonResp)
-                console.log(jsonResp);
                 if (jsonResp.error) {
-                    console.log(jsonResp)
                     return jsonResp.error_code
                 } else {
                     return jsonResp.bid
@@ -60,5 +58,9 @@ export class ProductService {
             .catch(function(err){
                 console.log(err)
             })
+    }
+
+    listenBids() {
+        return new $WebSocket("ws://localhost:3000/api/bid/listen");
     }
 }

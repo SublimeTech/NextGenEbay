@@ -8,6 +8,8 @@ import { RouteParams, Router } from '@angular/router-deprecated';
 import 'rxjs/Rx';
 import {MODAL_DIRECTVES, BS_VIEW_PROVIDERS} from 'ng2-bootstrap';
 import { Observable }  from 'rxjs/Observable'
+import {$WebSocket} from 'angular2-websocket/angular2-websocket'
+
 
 
 
@@ -25,6 +27,7 @@ export class ProductList {
     vm = this;
     products: [Product];
     bidInput: number;
+    ws: $WebSocket;
     @ViewChild('smModal') modal;
 
 
@@ -36,7 +39,23 @@ export class ProductList {
         var vm = this.vm;
         this.productService.getProducts()
             .map(function(products: [Product]){
-                vm.products = products
+                vm.products = products;
+                // if (!vm.ws) {
+                    vm.ws = vm.productService.listenBids();
+                    vm.ws.onMessage(function(message: string){
+                        var obj = JSON.parse(message.data);
+
+                        console.log(obj.bid.product_id);
+                        var productId = obj.bid.product_id
+                        var index = vm.products.findIndex((item: Product)=> item.id === productId);
+                        var product = vm.products[index]
+                        product.maxBid = obj.bid
+                    }, [])
+                        .onError(function(error: string){
+                            console.error(error);
+                        })
+                        .connect(true);
+                // }
             })
             .subscribe();
     }

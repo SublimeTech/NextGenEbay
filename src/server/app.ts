@@ -9,7 +9,6 @@ var user = require("./controllers/user");
 var session = require('express-session');
 var path = require('path');
 
-
 var app = express();
 app.set('view engine', 'jade');
 app.use(bodyParser.urlencoded({extended: true}));
@@ -40,9 +39,6 @@ app.get('/login', (req, res) => {
     res.sendFile(path.resolve(__dirname + '/../client/index.html')) ;
 });
 
-
-
-
 app.get('/api/products', product.list);
 app.post('/api/bid', product.makeBid);
 
@@ -50,8 +46,20 @@ app.post('/api/register', user.register);
 app.post('/api/login', user.login);
 app.get('/api/logout', user.logout);
 
+var expressWs = require('express-ws')(app);
+app.ws('/api/bid/listen', function(ws, req) {
+    ws.on('message', function(socket) {
+       ws.send('Hola mama!')
+    });
+});
+
+
 app.listen(3000, function () {
     console.log('Test server is up ' + __dirname + '/../../')
 });
 
+
+
+
 export var App = app;
+export var WebSocket = expressWs;

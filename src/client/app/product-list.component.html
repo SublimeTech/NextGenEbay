@@ -4,7 +4,7 @@
         <div>{{product.description}}</div>
         <div class="max-bid" *ngIf="product.maxBid != null">
             <strong>Max Bid</strong>
-            <p>{{product.maxBid.user.username}}</p>
+            <p *ngIf="product.maxBid.user != nul">{{product.maxBid.user.username}}</p>
             <p>{{product.maxBid.amount}}</p>
         </div>
         <button type="button" class="btn btn-primary" (click)="vm.showModal()">Bid</button>
