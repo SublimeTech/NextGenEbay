@@ -9,9 +9,23 @@ import {ProductList} from './products-list.component'
     selector: 'app-root',
     template: `
     <h1>{{title}}</h1>
-    <nav>
-    
-    </nav>
+    <nav class="navbar navbar-light bg-faded">
+  <a class="navbar-brand" href="#">EbayNextGen</a>
+  <ul class="nav navbar-nav">
+    <li class="nav-item active">
+      <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Features</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Pricing</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">About</a>
+    </li>
+  </ul>
+</nav>
     <router-outlet></router-outlet>
   `,
     styleUrls: ['app/app.component.css'],

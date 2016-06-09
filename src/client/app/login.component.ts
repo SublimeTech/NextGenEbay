@@ -6,6 +6,7 @@ import {CORE_DIRECTIVES} from '@angular/common';
 import {AlertComponent} from 'ng2-bootstrap';
 import { RouteParams, Router } from '@angular/router-deprecated';
 import {MODAL_DIRECTVES, BS_VIEW_PROVIDERS} from 'ng2-bootstrap';
+import localStorage from 'angular2-local-storage';
 
 
 
@@ -45,9 +46,11 @@ export class LoginComponent {
                 console.log('Inside '+ success);
                 if (success == true) {
                     vm.loginError = "";
+                    localStorage.setItem('is_logged_in', true);
                     vm.router.navigate(['Home'])
 
                 } else {
+                    localStorage.setItem('is_logged_in', false);
                     vm.loginError = "Bad credentials";
                 }
             })

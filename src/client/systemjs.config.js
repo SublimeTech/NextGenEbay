@@ -15,7 +15,8 @@
     'moment':                     '/node_modules/moment',
     'angular2-websocket':          '/node_modules/angular2-websocket',
     'angular2':                     '/node_modules/angular2',
-    'angular2/core':                '/node_modules/angular2'
+    'angular2/core':                '/node_modules/angular2',
+    'angular2-local-storage':        '/node_modules/angular2-local-storage'
   };
 
   // packages tells the System loader how to load when no filename and/or no extension
@@ -26,7 +27,8 @@
     'ng2-bootstrap': { main: 'ng2-bootstrap.js', defaultExtension: 'js' },
     'moment':  { main: 'moment.js', defaultExtension: 'js' },
     'angular2-websocket': { main: 'angular2-websocket.js', defaultExtension: 'js' },
-    'angular2/core': {main: 'core.js', defaultExtension: 'js'}
+    'angular2/core': {main: 'core.js', defaultExtension: 'js'},
+    'angular2-local-storage': {main: 'local_storage.js', defaultExtension: 'js'}
   };
 
   var ngPackageNames = [

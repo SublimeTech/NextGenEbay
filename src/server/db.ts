@@ -1,6 +1,11 @@
 var pgp = require('pg-promise')();
 var db = pgp('postgres://nextgenebaydba:ebay@localhost/nextgenebay');
 
+//Todo: export this to a utils
+String.prototype.replaceBetween = function(start, end, what) {
+    return this.substring(0, start) + what + this.substring(end);
+};
+
 function sql(file) {
     return new pgp.QueryFile(file, {minify: true});
 }
@@ -65,6 +70,9 @@ export function getProducts(callback:(products:Product[]) => void) {
             t.map('SELECT * FROM bid WHERE product_id = $1 order by amount desc limit 1', product.id, bid=>
                 t.one('select id, username, created_at from "user" where id = $1', bid.user_id)
                     .then(user=> {
+                        if (user.username.length > 3) {
+                            user.username = user.username.replaceBetween(user.username.length-3, user.username.length, '***')
+                        }
                         bid.user = user;
                         return bid
                     })
