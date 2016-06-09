@@ -44,10 +44,15 @@ export function makeBid(userId: number, productId: number, amount: number, callb
     db.connect().then(function(db) {
         db.one('INSERT INTO bid(user_id, amount, product_id) VALUES($1, $2, $3) returning id;',  [userId, amount, productId])
             .then(bidId=>
-                db.one('SELECT user_id, amount::numeric, product_id from bid where id = $1;', [bidId.id])
-                    .then(function(bid) {
-                        callback(bid)
-                    })
+            db.task(t=>db.map('SELECT user_id, amount::numeric, product_id from bid where id = $1;', [bidId.id], bid=>
+            t.one('select id, username, created_at from "user" where id = $1', bid.user_id)
+                .then(user=> {
+                    bid.user = user;
+                    return bid
+                })).then(t.batch)
+                .then(data=>callback(data[0]))
+            )
+
             );
             // .catch(err=>console.error(err))
     });

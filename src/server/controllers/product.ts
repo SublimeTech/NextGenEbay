@@ -25,7 +25,7 @@ exports.makeBid = function(req, res) {
     if (!currentMaxBid) {
 
     }
-    else if (req.body.amount < currentMaxBid.amount) {
+    else if (req.body.amount <= currentMaxBid.amount) {
       res.send(JSON.stringify({error: true, error_msg: 'Amount is less than the current max bid of this product'}));
       return;
     }
