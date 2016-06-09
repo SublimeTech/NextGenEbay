@@ -10,6 +10,7 @@ import {ProductList} from './products-list.component'
     template: `
     <h1>{{title}}</h1>
     <nav>
+    
     </nav>
     <router-outlet></router-outlet>
   `,
