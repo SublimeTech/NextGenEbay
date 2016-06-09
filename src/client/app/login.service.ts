@@ -24,6 +24,23 @@ export class LoginService {
         }
     }
 
+    register(username: string, password: string): Observable<boolean> {
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        return this.http.post('/api/register', JSON.stringify({username: username, password: password}), options)
+            .map(function(res){
+                var jsonResp = res.json();
+                if (jsonResp.error) {
+                    return false;
+                } else {
+                    return true
+                }
+            })
+            .catch(function(err){
+                return Observable.throw(false)
+            })
+    }
+
     login(username: string, password: string): Observable<boolean> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });

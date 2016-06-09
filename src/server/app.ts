@@ -39,6 +39,14 @@ app.get('/login', (req, res) => {
     res.sendFile(path.resolve(__dirname + '/../client/index.html')) ;
 });
 
+app.get('/register', (req, res) => {
+    res.sendFile(path.resolve(__dirname + '/../client/index.html')) ;
+});
+
+app.get('/about', (req, res) => {
+    res.sendFile(path.resolve(__dirname + '/../client/index.html')) ;
+});
+
 app.get('/api/products', product.list);
 app.post('/api/bid', product.makeBid);
 

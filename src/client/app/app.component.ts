@@ -4,6 +4,7 @@ import {LoginService, User} from './login.service'
 
 import { LoginComponent } from './login.component';
 import {ProductList} from './products-list.component'
+import {RegisterComponent} from './register.component'
 import {HTTP_PROVIDERS} from '@angular/http';
 import { RouteParams, Router } from '@angular/router-deprecated';
 
@@ -21,6 +22,10 @@ import { RouteParams, Router } from '@angular/router-deprecated';
     
     <li class="nav-item">
       <a class="nav-link" href="#">About</a>
+    </li>
+    
+    <li class="nav-item" *ngIf="!vm.loginService.isLoggedIn()">
+      <a class="nav-link" href="#" [routerLink]="['Register']">Register</a>
     </li>
     
     <li class="nav-item" *ngIf="!vm.loginService.isLoggedIn()">
@@ -49,11 +54,17 @@ import { RouteParams, Router } from '@angular/router-deprecated';
         useAsDefault: false
     },
     {
+        path: '/register',
+        name: 'Register',
+        component: RegisterComponent,
+        useAsDefault: false
+    },
+    {
         path: '/',
         name: 'Home',
         component: ProductList,
         useAsDefault: true
-    }
+    },
 ])
 export class AppComponent {
     viewContainerRef: ViewContainerRef = null;

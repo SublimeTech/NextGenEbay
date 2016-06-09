@@ -14,7 +14,7 @@ exports.login = function (req, res) {
             res.send(JSON.stringify({error: true, error_msg: 'Invalid credentials'}));
             return;
         }
-        console.log('Going to compare password')
+        console.log('')
         bcrypt.compare(req.body.password, data.password, function (err, isPassword) {
             if (isPassword) {
                 req.session.isAuthenticated = true;
@@ -65,12 +65,14 @@ exports.register = function (req, res) {
 
     db.getUserByUsername(req.body.username, function(data){
         if (!data) {
-            db.createUser(req.body.username, req.body.password, function (data) {
-                if (!data) {
-                    res.send(JSON.stringify({error: true, response_msg: 'Internal error'}), 500)
-                } else {
-                    res.send(JSON.stringify({error: false, response_msg: 'User cr'}))
-                }
+            bcrypt.hash(req.body.password, saltRounds, function(err, hash){
+                db.createUser(req.body.username, hash, function (data) {
+                    if (!data) {
+                        res.send(JSON.stringify({error: true, response_msg: 'Internal error'}), 500)
+                    } else {
+                        res.send(JSON.stringify({error: false, response_msg: 'User created success'}))
+                    }
+                });
             });
         } else {
             res.send(JSON.stringify({error: true, response_msg: 'Username already exist'}))
