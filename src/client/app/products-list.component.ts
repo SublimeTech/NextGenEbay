@@ -9,6 +9,8 @@ import 'rxjs/Rx';
 import {MODAL_DIRECTVES, BS_VIEW_PROVIDERS} from 'ng2-bootstrap';
 import { Observable }  from 'rxjs/Observable'
 import {$WebSocket} from 'angular2-websocket/angular2-websocket'
+import {LoginService, User} from './login.service'
+
 
 
 
@@ -17,7 +19,7 @@ import {$WebSocket} from 'angular2-websocket/angular2-websocket'
     selector: 'product-list',
     templateUrl: 'app/product-list.component.html',
     styleUrls: ['app/product-list.component.css'],
-    providers: [ProductService, HTTP_PROVIDERS] ,
+    providers: [ProductService, HTTP_PROVIDERS, LoginService] ,
     directives: [AlertComponent, CORE_DIRECTIVES, MODAL_DIRECTVES],
     viewProviders:[BS_VIEW_PROVIDERS]
 })
@@ -29,10 +31,11 @@ export class ProductList {
     bidInput: number;
     ws: $WebSocket;
     @ViewChild('smModal') modal;
+    @ViewChild('bidSuperpassAlertModal') bidSuperPassAlertModal;
 
 
-    constructor (private productService: ProductService, private router: Router) {
-
+    constructor (private productService: ProductService, private router: Router, loginService: LoginService) {
+        this.loginService = loginService
     }
 
     ngOnInit() {
@@ -48,6 +51,13 @@ export class ProductList {
                         console.log(obj.bid.product_id);
                         var productId = obj.bid.product_id
                         var index = vm.products.findIndex((item: Product)=> item.id === productId);
+                        if (vm.loginService.isLoggedIn()) {
+                            var currentMaxBid = vm.products[index].maxBid;
+                            if ((currentMaxBid && currentMaxBid.user_id == vm.loginService.getCurrentUser().id) && currentMaxBid.user_id != obj.bid.user_id) {
+                                console.log('you bid was superpass')
+                                vm.bidSuperPassAlertModal.show()
+                            }
+                        }
                         var product = vm.products[index]
                         product.maxBid = obj.bid
                     }, [])

@@ -12,13 +12,19 @@ export class User {
 
 @Injectable()
 export class LoginService {
-    private baseURL = '/api/products'
+    user = null;
 
     constructor(private http:Http) {
     }
 
+    ngOnInit() {
+        var storageUser = localStorage.getItem("currentUser");
+        if (storageUser && this.isLoggedIn()) {
+            this.user = JSON.parse(storageUser)
+        }
+    }
+
     login(username: string, password: string): Observable<boolean> {
-        console.log('Hola mama');
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         return this.http.post('/api/login', JSON.stringify({username: username, password: password}), options)
@@ -26,14 +32,48 @@ export class LoginService {
                 var jsonResp = res.json();
                 if (jsonResp.error) {
                     console.error(jsonResp.error_msg);
+                    localStorage.setItem('is_logged_in', false);
+                    this.user = null
                     return null;
                 } else {
+                    localStorage.setItem('is_logged_in', true);
+                    this.user = jsonResp.user;
+                    localStorage.setItem('currentUser', JSON.stringify(jsonResp.user));
                     return jsonResp.user;
                 }
             })
             .catch(function(err){
                 return Observable.throw(false)
             })
+    }
+
+    isLoggedIn() {
+        if (!localStorage.getItem('is_logged_in')) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    loggedOut() {
+        return this.http.get('/api/logout')
+            .map(function(res){
+                console.log(res);
+                localStorage.setItem("is_logged_in", false);
+                localStorage.setItem("currentUser", JSON.stringify({}));
+            })
+            .catch(function(err){
+                return Observable.throw(false)
+            })
+    }
+
+    getCurrentUser() {
+        var storageUser = localStorage.getItem("currentUser");
+        if (storageUser && this.isLoggedIn()) {
+            return JSON.parse(storageUser)
+        } else {
+            return null;
+        }
     }
 
 }

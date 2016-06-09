@@ -14,7 +14,7 @@
         </div>
 
         <div bsModal #smModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-sm">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" aria-label="Close" (click)="smModal.hide()">
@@ -38,4 +38,18 @@
     </div>
     </div>
 
-    <!-- Small modal -->
+<div bsModal #bidSuperpassAlertModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" aria-label="Close" (click)="bidSuperpassAlertModal.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Bid superpass</h4>
+            </div>
+            <div class="modal-body">
+                Your bid was superpass
+            </div>
+        </div>
+    </div>
+</div>

@@ -4,7 +4,6 @@ var bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 exports.login = function (req, res) {
-    console.log(req.session.currentUser);
     res.setHeader('Content-Type', 'application/json');
     if (!req.body.username || !req.body.password) {
         res.send(JSON.stringify({'error': true, error_msg: 'Invalid params'}));
@@ -15,12 +14,13 @@ exports.login = function (req, res) {
             res.send(JSON.stringify({error: true, error_msg: 'Invalid credentials'}));
             return;
         }
+        console.log('Going to compare password')
         bcrypt.compare(req.body.password, data.password, function (err, isPassword) {
             if (isPassword) {
                 req.session.isAuthenticated = true;
                 req.session.currentUser = data;
                 delete data.password;
-                res.send(JSON.stringify({error: false, response_msg: 'User authenticated success.'; user: data}));
+                res.send(JSON.stringify({error: false, response_msg: 'User authenticated success.', user: data}));
             } else {
                 res.send(JSON.stringify({error: true, error_msg: 'Invalid credentials'}));
             }

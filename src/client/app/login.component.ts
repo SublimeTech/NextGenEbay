@@ -30,7 +30,6 @@ export class LoginComponent {
     }
 
     ngOnInit() {
-
     }
 
     onSubmit() {
@@ -44,12 +43,9 @@ export class LoginComponent {
                 vm.loginError = "Error en el login";
                 if (user != null) {
                     vm.loginError = "";
-                    localStorage.setItem('is_logged_in', true);
-                    localStorage.setItem('currentUser', JSON.stringify(user));
                     vm.router.navigate(['Home'])
 
                 } else {
-                    localStorage.setItem('is_logged_in', false);
                     vm.loginError = "Bad credentials";
                 }
             })
