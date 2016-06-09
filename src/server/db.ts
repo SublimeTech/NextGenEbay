@@ -67,7 +67,7 @@ export function makeBid(userId: number, productId: number, amount: number, callb
 export function getProducts(callback:(products:Product[]) => void) {
     db.task(t =>
         t.map('SELECT * FROM product order by id desc;', null, product =>
-            t.map('SELECT * FROM bid WHERE product_id = $1 order by amount desc limit 1', product.id, bid=>
+            t.map('SELECT user_id, amount::numeric, product_id FROM bid WHERE product_id = $1 order by amount desc limit 1', product.id, bid=>
                 t.one('select id, username, created_at from "user" where id = $1', bid.user_id)
                     .then(user=> {
                         if (user.username.length > 3) {

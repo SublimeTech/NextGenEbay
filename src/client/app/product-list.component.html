@@ -24,10 +24,16 @@
                         <p>{{product.description}}</p>
                     </div>
                     <div class="modal-body">
+                        <div>
+                            <ul style="list-style:none;">
+                                <li>Current MaxBid: {{product.maxBid?.amount}}</li>
+                                <li>Current MaxBidder: {{product.maxBid?.user.username}}</li>
+                            </ul>
+                        </div>
                         <form class="form" role="form">
                             <div class="form-group">
                                 <label for="bidInput">Bid</label>
-                                <input type="number" class="form-control" id="bidInput" placeholder="0.0$" [(ngModel)]="vm.bidInput">
+                                <input type="number" class="form-control" id="bidInput" placeholder="0.0$" [min]="vm.getMinimumBid(product.maxBid)" [(ngModel)]="vm.bidInput">
                             </div>
                             <button class="btn btn-primary" (click)="vm.makeBid(product.id)" >Bid</button>
                         </form>

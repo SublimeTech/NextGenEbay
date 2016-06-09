@@ -32,7 +32,8 @@ export class LoginService {
                 var jsonResp = res.json();
                 if (jsonResp.error) {
                     console.error(jsonResp.error_msg);
-                    localStorage.setItem('is_logged_in', false);
+                    localStorage.removeItem('is_logged_in');
+                    localStorage.removeItem('currentUser');
                     this.user = null
                     return null;
                 } else {
@@ -55,12 +56,12 @@ export class LoginService {
         }
     }
 
-    loggedOut() {
+    logout() {
         return this.http.get('/api/logout')
             .map(function(res){
                 console.log(res);
-                localStorage.setItem("is_logged_in", false);
-                localStorage.setItem("currentUser", JSON.stringify({}));
+                localStorage.removeItem('is_logged_in');
+                localStorage.removeItem('currentUser');
             })
             .catch(function(err){
                 return Observable.throw(false)

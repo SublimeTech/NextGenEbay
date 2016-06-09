@@ -91,5 +91,14 @@ export class ProductList {
             .subscribe();
     }
 
+    getMinimumBid(currentMaxBid: Bid) {
+        if (!currentMaxBid) {
+            return 1;
+        } else {
+            console.log(currentMaxBid.amount);
+            return Math.round(currentMaxBid.amount) + 1
+        }
+    }
+
 
 }
